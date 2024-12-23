@@ -46,6 +46,7 @@ Instructions.TextColor3 = Color3.fromRGB(150, 150, 150)
 Instructions.BackgroundTransparency = 1
 Instructions.Parent = Frame
 
+-- TextBox to display the entered key
 local TextBox = Instance.new("TextBox")
 TextBox.Size = UDim2.new(0.8, 0, 0.2, 0)
 TextBox.Position = UDim2.new(0.1, 0, 0.4, 0)
@@ -60,6 +61,7 @@ local TextBoxCorner = Instance.new("UICorner")
 TextBoxCorner.CornerRadius = UDim.new(0, 5)
 TextBoxCorner.Parent = TextBox
 
+-- CheckKey button to validate the key
 local CheckKey = Instance.new("TextButton")
 CheckKey.Size = UDim2.new(0.35, 0, 0.15, 0)
 CheckKey.Position = UDim2.new(0.55, 0, 0.7, 0)
@@ -73,37 +75,74 @@ local CheckKeyCorner = Instance.new("UICorner")
 CheckKeyCorner.CornerRadius = UDim.new(0, 5)
 CheckKeyCorner.Parent = CheckKey
 
--- Function to decrypt the key (shift letters back by 5)
-local function decryptKey(encryptedKey)
-    local decrypted = ""
-    for i = 1, #encryptedKey do
-        local char = encryptedKey:sub(i, i)
-        if char >= "a" and char <= "z" then
-            local newChar = string.char(((string.byte(char) - string.byte("a") - 5 + 26) % 26) + string.byte("a"))
-            decrypted = decrypted .. newChar
+-- GetKey button to generate and display the encrypted key
+local GetKey = Instance.new("TextButton")
+GetKey.Size = UDim2.new(0.35, 0, 0.15, 0)
+GetKey.Position = UDim2.new(0.1, 0, 0.7, 0)
+GetKey.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+GetKey.Text = "Get Key"
+GetKey.TextSize = 18
+GetKey.TextColor3 = Color3.fromRGB(150, 150, 150)
+GetKey.Parent = Frame
+
+local GetKeyCorner = Instance.new("UICorner")
+GetKeyCorner.CornerRadius = UDim.new(0, 5)
+GetKeyCorner.Parent = GetKey
+
+-- Function to encrypt the username by shifting each letter by 5
+local function encryptUsername(username)
+    local encrypted = ""
+    username = username:lower()  -- Convert the username to lowercase
+
+    for i = 1, #username do
+        local letter = username:sub(i, i)
+        local ascii = string.byte(letter)
+
+        if ascii >= 97 and ascii <= 122 then  -- Check if it's a lowercase letter
+            -- Shift the letter by 5 positions
+            local newAscii = ascii + 5
+            if newAscii > 122 then
+                newAscii = newAscii - 26  -- Wrap around after 'z'
+            end
+            encrypted = encrypted .. string.char(newAscii)
         else
-            decrypted = decrypted .. char
+            encrypted = encrypted .. letter  -- Non-alphabetical characters remain unchanged
         end
     end
-    return decrypted
+
+    return encrypted
 end
 
+-- Event handler to check the key when the button is clicked
 CheckKey.MouseButton1Click:Connect(function()
     local enteredKey = TextBox.Text
     local player = game.Players.LocalPlayer
     local username = player.Name
-    local decryptedKey = decryptKey(enteredKey)
 
-    -- Validate the key by comparing
-    if decryptedKey == username then
+    -- Encrypt the username to generate the key
+    local generatedKey = encryptUsername(username)
+
+    -- Validate the entered key by comparing it with the generated key
+    if enteredKey == generatedKey then
         TextBox.PlaceholderText = "Correct Key!"
         TextBox.Text = ""
         wait(1)
-        ScreenGui:Destroy()
+        ScreenGui:Destroy()  -- Destroy the GUI after successful validation
 
-        -- Put Your Script Here (the script that gets executed after the key is correct)
-        loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))() -- Example script execution after key validation
+        -- Run the script (Example: This will print a message)
+        print("Script should run")  -- Place your script here
     else
         TextBox.PlaceholderText = "Incorrect Key!"
     end
+end)
+
+-- Event handler to generate and display the key when the "Get Key" button is clicked
+GetKey.MouseButton1Click:Connect(function()
+    -- Copy the link to clipboard
+    local url = "https://kash-yh.github.io/Script/"
+    setclipboard(url)  -- Copies the URL to the clipboard
+
+    -- Display the URL in the TextBox
+    TextBox.Text = url
+    TextBox.PlaceholderText = "URL Copied! You can paste it now."
 end)
