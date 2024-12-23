@@ -128,9 +128,8 @@ CheckKey.MouseButton1Click:Connect(function()
         TextBox.Text = ""
         wait(1)
         ScreenGui:Destroy()  -- Destroy the GUI after successful validation
-
-       setclipboard("Working")
-    else
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()
+      else
         TextBox.PlaceholderText = "Incorrect Key!"
     end
 end)
