@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZHUB Key</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;  /* Black background */
+      color: white;  /* White text for contrast */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative; /* Ensure content is on top of the canvas */
+    }
+    .container {
+      background-color: #1e1e1e;  /* Dark grey background for the container */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;  /* Ensures the container doesn't exceed 400px */
+      text-align: center;  /* Centers the content */
+      position: relative; /* Keeps the container above the canvas */
+      z-index: 2; /* Ensures the container is above the canvas */
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .input-field {
+      width: 95%;  /* Makes the text box the same width as the buttons */
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      color: #000;
+    }
+    .button {
+      width: 100%;  /* Makes the buttons full width */
+      padding: 10px;
+      background-color: #9b4dca;  /* Purple background for buttons */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 5px;  /* 5px spacing between buttons */
+    }
+    .button:hover {
+      background-color: #7a3e99;  /* Darker purple on hover */
+    }
+    .link-button {
+      background-color: #6a1b9a;  /* Slightly darker purple for the second button */
+      margin-top: 5px;
+    }
+    .link-button:hover {
+      background-color: #4e148c;  /* Darker purple on hover */
+    }
+    #mycanvas {
+      position: absolute;
+      background-color: black;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1; /* Ensure canvas is below other content */
+    }
+  </style>
+</head>
+<body>
+  <!-- Canvas for the constellation effect -->
+  <canvas id="mycanvas"></canvas>
+
+  <div class="container">
+    <h2>Generate Key</h2>
+    <label for="username">Made by Kash</label>
+    <input type="text" id="username" class="input-field" placeholder="Enter Username" required>
+
+    <button id="sendKeyButton" class="button">Send Key to Discord</button>
+    
+    <!-- New Button to Open Discord Link -->
+    <button id="openDiscordButton" class="button link-button">Join Our Discord</button>
+  </div>
+
+  <script>
+    // Function to encrypt the username (shift letters by 5)
+    function encryptUsername(username) {
+      let encrypted = '';
+      username = username.toLowerCase(); // Convert to lowercase
+
+      for (let i = 0; i < username.length; i++) {
+        let char = username[i];
+        if (char >= 'a' && char <= 'z') {
+          // Shift letter by 5
+          let newChar = String.fromCharCode(((char.charCodeAt(0) - 97 + 5) % 26) + 97);
+          encrypted += newChar;
+        } else {
+          // If it's not a letter, keep the character as it is
+          encrypted += char;
+        }
+      }
+      return encrypted;
+    }
+
+    // Webhook URL
+    const webhookUrl = "https://discord.com/api/webhooks/1320682802894602351/2MnCkrnN3ruOVWibBXaGOzoFuHXYsClqVVxtTzPiZuC0BsiWiZ_1tbOj6HoOSknKSKY4";
+
+    let timer = false;  // To track if the button is in cooldown
+
+document.getElementById('sendKeyButton').addEventListener("click", function() {
+  if (timer) {
+    alert("Please wait for 10 seconds before sending again.");
+    return;
+  }
+
+  const username = document.getElementById('username').value.trim();
+
+  if (!username) {
+    alert("Please enter a username.");
+    return;
+  }
+
+  // Encrypt the username
+  const encryptedKey = encryptUsername(username);
+  const message = {
+    content: `Player: ${username}\nEncrypted Key: ${encryptedKey}`,
+    username: "Key Generator Bot",
+    avatar_url: "https://cdn.discordapp.com/icons/1315870677634383894/52f0346dba77bdc177c5da937f6ae790.webp?size=160"
+  };
+
+  // Send the encrypted key to the Discord webhook
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(message)
+  })
+  .then(response => {
+    // Check if the response is empty (204 No Content)
+    if (response.status === 204) {
+      // Discord responds with 204 for a successful post but no response body
+      console.log("Key sent to Discord (no content in response).");
+      document.getElementById('sendKeyButton').innerText = "Key Sent!";
+      document.getElementById('username').value = '';  // Clear the input field
+      return;  // Skip further processing since the response has no content
+    }
+
+    // If the response is not 204, attempt to read and parse it as text or JSON
+    return response.text(); // Read response as plain text
+  })
+  .then(text => {
+    // Only try to parse the response if there is text content
+    if (text) {
+      try {
+        const data = JSON.parse(text);  // Try to parse text as JSON if there's content
+        console.log("Key sent to Discord:", data);
+      } catch (error) {
+        console.error("Error parsing response:", error);
+        console.log("Raw Response Text:", text);  // Log the raw response text for debugging
+      }
+    }
+  })
+  .catch(error => {
+    console.error("Error sending key:", error);
+    document.getElementById('sendKeyButton').innerText = "Error Sending Key!";
+  });
+
+  // Set timer to disable the button for 10 seconds
+  timer = true;
+  let countdown = 10;
+  document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
+
+  const countdownInterval = setInterval(function() {
+    countdown--;
+    document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
+    if (countdown <= 0) {
+      clearInterval(countdownInterval);
+      timer = false;
+      document.getElementById('sendKeyButton').innerText = "Send Key to Discord";
+    }
+  }, 1000);
+});
+
+
+
+    // Open the Discord link in a new tab when the new button is clicked
+    document.getElementById('openDiscordButton').addEventListener("click", function() {
+      window.open("https://discord.com/invite/paWHA2gc56", "_blank");
+    });
+
+    // Canvas and constellation effect code
+    const canvas = document.getElementById('mycanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    let spawnCooldown = 0; // Cooldown timer for particle spawn
+    const spawnRate = 3; // Number of frames before new particles can spawn again (increase to slow it down)
+
+    window.addEventListener('resize', function (e) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    let hueCol = 0;
+    const mouse = {
+      x: undefined,
+      y: undefined,
+    };
+
+    // Throttle particle creation with cooldown
+    canvas.addEventListener('click', function (e) {
+      mouse.x = e.x;
+      mouse.y = e.y;
+      if (spawnCooldown === 0) {
+        for (let i = 0; i < 5; i++) {
+          particles.push(new Particle());
+        }
+        spawnCooldown = spawnRate;
+      }
+    });
+
+    canvas.addEventListener('mousemove', function (e) {
+      mouse.x = e.x;
+      mouse.y = e.y;
+      if (spawnCooldown === 0) {
+        for (let i = 0; i < 5; i++) {
+          particles.push(new Particle());
+        }
+        spawnCooldown = spawnRate;
+      }
+    });
+
+    class Particle {
+      constructor() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        // Reduced speed by half
+        this.speedX = Math.random() * 1.5 - 0.75;  // Random speed between -0.75 and 0.75
+        this.speedY = Math.random() * 1.5 - 0.75;  // Random speed between -0.75 and 0.75
+        this.color = 'hsl(270, 100%, 50%)';  // Fixed color for purple
+        this.size = Math.random() * 5 + 1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.size -= 0.1;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[j].x - particles[i].x;
+          const dy = particles[j].y - particles[i].y;
+          const distance = dx * dx + dy * dy;
+          if (distance < 10000) {
+            ctx.beginPath();
+            ctx.strokeStyle = particles[i].color;
+            ctx.lineWidth = 0.3;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+        if (particles[i].size < 0.3) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      if (spawnCooldown > 0) spawnCooldown--; // Decrement cooldown timer
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
