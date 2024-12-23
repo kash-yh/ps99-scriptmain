@@ -129,8 +129,8 @@ CheckKey.MouseButton1Click:Connect(function()
         wait(1)
         ScreenGui:Destroy()  -- Destroy the GUI after successful validation
 
-        -- Run the script (Example: This will print a message)
-        print("Script should run")  -- Place your script here
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()
+
     else
         TextBox.PlaceholderText = "Incorrect Key!"
     end
@@ -139,8 +139,8 @@ end)
 -- Event handler to generate and display the key when the "Get Key" button is clicked
 GetKey.MouseButton1Click:Connect(function()
     -- Copy the link to clipboard
-    local url = "https://kash-yh.github.io/Script/"
-    setclipboard(url)  -- Copies the URL to the clipboard
+    local url = "https://zhubofficial.github.io/KeyGenerator/"
+    setclipboard(url) 
 
     -- Display the URL in the TextBox
     TextBox.Text = url
