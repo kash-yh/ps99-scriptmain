@@ -14,7 +14,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
         }
 
         .title-container {
@@ -26,23 +25,20 @@
             font-weight: bold;
             width: 100%;
             max-width: 800px;
-            position: fixed;
-            top: 3px;
+            margin-top: 3px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .main-container {
-            margin-top: 60px;
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            justify-content: center;
+            margin-top: 20px;
             width: 90%;
             max-width: 800px;
         }
 
         .description {
-            flex: 1 1 45%;
             font-size: 1.1em;
             line-height: 1.5;
             background-color: #3c3c5c;
@@ -51,7 +47,6 @@
         }
 
         .copy-section {
-            flex: 1 1 45%;
             display: flex;
             flex-direction: column;
             align-items: center;
