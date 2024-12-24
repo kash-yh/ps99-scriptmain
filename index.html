@@ -54,6 +54,7 @@
             width: 48%;
             height: 200px;
             flex-shrink: 0;
+            margin-left: 5px;
         }
 
         .copy-section {
@@ -63,6 +64,7 @@
             width: 48%;
             height: 200px;
             gap: 10px;
+            margin-right: 5px;
         }
 
         .code-box {
@@ -141,7 +143,7 @@
 
     <script>
         function copyText() {
-            const textToCopy = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility\"))()";
+            const textToCopy = "loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()";
             navigator.clipboard.writeText(textToCopy)
                 .then(() => alert("Script copied to clipboard!"))
                 .catch(err => alert("Failed to copy text: " + err));
