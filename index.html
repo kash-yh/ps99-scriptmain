@@ -22,19 +22,51 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            text-align: center;
-            max-width: 500px;
             width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        h1 {
-            color: #8a2be2;
+        .title-box {
+            background-color: #8a2be2;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
         }
 
-        p {
-            margin: 20px 0;
+        .content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .description {
+            width: 75%;
             font-size: 1.1em;
             line-height: 1.5;
+        }
+
+        .copy-section {
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-box {
+            background-color: #3c3c5c;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            color: #e1e1ff;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+            word-wrap: break-word;
         }
 
         .button {
@@ -55,9 +87,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to My Webpage</h1>
-        <p>This is a simple webpage with a sleek black and purple design and rounded elements. Click the button below to copy some text to your clipboard.</p>
-        <button class="button" onclick="copyText()">Copy Text</button>
+        <div class="title-box">Welcome to My Webpage</div>
+        <div class="content">
+            <div class="description">
+                This is a simple webpage with a sleek black and purple design and rounded elements. On the right, you can see the text being copied and the button to copy it to your clipboard.
+            </div>
+            <div class="copy-section">
+                <div class="code-box">Hello, this is the text to copy!</div>
+                <button class="button" onclick="copyText()">Copy Text</button>
+            </div>
+        </div>
     </div>
 
     <script>
