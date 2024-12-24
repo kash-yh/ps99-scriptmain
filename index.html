@@ -36,7 +36,13 @@
             margin-top: 20px;
             width: 90%;
             max-width: 800px;
+            justify-content: center;
+        }
+
+        .row {
+            display: flex;
             justify-content: space-between;
+            width: 100%;
         }
 
         .description {
@@ -45,7 +51,7 @@
             background-color: #3c3c5c;
             border-radius: 10px;
             padding: 15px;
-            width: 500px;
+            width: 48%;
             height: 200px;
             flex-shrink: 0;
         }
@@ -54,7 +60,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 500px;
+            width: 48%;
             height: 200px;
             gap: 10px;
         }
@@ -91,37 +97,45 @@
 <body>
     <div class="title-container">zHub</div>
     <div class="main-container">
-        <div class="description">
-            Egg viewer script
-        </div>
-        <div class="copy-section">
-            <div class="code-box">loadstring(game:HttpGet(
+        <div class="row">
+            <div class="description">
+                Egg viewer script
+            </div>
+            <div class="copy-section">
+                <div class="code-box">loadstring(game:HttpGet(
 "https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
-            <button class="button" onclick="copyText()">Copy Text</button>
+                <button class="button" onclick="copyText()">Copy Text</button>
+            </div>
         </div>
-        <div class="description">
-            Egg viewer script
-        </div>
-        <div class="copy-section">
-            <div class="code-box">loadstring(game:HttpGet(
+        <div class="row">
+            <div class="description">
+                Egg viewer script
+            </div>
+            <div class="copy-section">
+                <div class="code-box">loadstring(game:HttpGet(
 "https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
-            <button class="button" onclick="copyText()">Copy Text</button>
+                <button class="button" onclick="copyText()">Copy Text</button>
+            </div>
         </div>
-        <div class="description">
-            Egg viewer script
-        </div>
-        <div class="copy-section">
-            <div class="code-box">loadstring(game:HttpGet(
+        <div class="row">
+            <div class="description">
+                Egg viewer script
+            </div>
+            <div class="copy-section">
+                <div class="code-box">loadstring(game:HttpGet(
 "https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
-            <button class="button" onclick="copyText()">Copy Text</button>
+                <button class="button" onclick="copyText()">Copy Text</button>
+            </div>
         </div>
-        <div class="description">
-            Egg viewer script
-        </div>
-        <div class="copy-section">
-            <div class="code-box">loadstring(game:HttpGet(
+        <div class="row">
+            <div class="description">
+                Egg viewer script
+            </div>
+            <div class="copy-section">
+                <div class="code-box">loadstring(game:HttpGet(
 "https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
-            <button class="button" onclick="copyText()">Copy Text</button>
+                <button class="button" onclick="copyText()">Copy Text</button>
+            </div>
         </div>
     </div>
 
