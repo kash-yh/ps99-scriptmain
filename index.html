@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black and Purple Design</title>
+    <title>zHub</title>
     <style>
         body {
             background-color: #1e1e2f;
@@ -18,7 +18,7 @@
         }
 
         .title-container {
-            background-color: #8a2be2;
+            background-color: #2a2a38;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
@@ -26,23 +26,23 @@
             font-weight: bold;
             width: 100%;
             max-width: 800px;
-            margin-bottom: 20px;
+            position: fixed;
+            top: 3px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .main-container {
-            background-color: #2b2b40;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
+            margin-top: 60px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
             width: 90%;
             max-width: 800px;
-            display: flex;
-            gap: 20px;
         }
 
         .description {
-            width: 75%;
+            flex: 1 1 45%;
             font-size: 1.1em;
             line-height: 1.5;
             background-color: #3c3c5c;
@@ -51,7 +51,7 @@
         }
 
         .copy-section {
-            width: 25%;
+            flex: 1 1 45%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -87,22 +87,43 @@
     </style>
 </head>
 <body>
-    <div class="title-container">Welcome to My Webpage</div>
+    <div class="title-container">zHub</div>
     <div class="main-container">
         <div class="description">
-            This is a simple webpage with a sleek black and purple design and rounded elements. On the right, you can see the text being copied and the button to copy it to your clipboard.
+            Egg viewer script
         </div>
         <div class="copy-section">
-            <div class="code-box">Hello, this is the text to copy!</div>
+            <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <button class="button" onclick="copyText()">Copy Text</button>
+        </div>
+        <div class="description">
+            Egg viewer script
+        </div>
+        <div class="copy-section">
+            <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <button class="button" onclick="copyText()">Copy Text</button>
+        </div>
+        <div class="description">
+            Egg viewer script
+        </div>
+        <div class="copy-section">
+            <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <button class="button" onclick="copyText()">Copy Text</button>
+        </div>
+        <div class="description">
+            Egg viewer script
+        </div>
+        <div class="copy-section">
+            <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
             <button class="button" onclick="copyText()">Copy Text</button>
         </div>
     </div>
 
     <script>
         function copyText() {
-            const textToCopy = "Hello, this is the text to copy!";
+            const textToCopy = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility\"))()";
             navigator.clipboard.writeText(textToCopy)
-                .then(() => alert("Text copied to clipboard!"))
+                .then(() => alert("Script copied to clipboard!"))
                 .catch(err => alert("Failed to copy text: " + err));
         }
     </script>
