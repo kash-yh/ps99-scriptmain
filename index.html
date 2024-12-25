@@ -161,18 +161,24 @@
             y: undefined,
         };
 
+        // Function to handle mouse movement
         canvas.addEventListener('mousemove', function (e) {
             mouse.x = e.x;
             mouse.y = e.y;
-            for (let i = 0; i < 3; i++) { // Spawn 3 particles on mouse move
+
+            // Spawn particles when mouse moves
+            for (let i = 0; i < 3; i++) { 
                 particles.push(new Particle);
             }
         });
 
+        // Function to handle mouse clicks
         canvas.addEventListener('click', function (e) {
             mouse.x = e.x;
             mouse.y = e.y;
-            for (let i = 0; i < 3; i++) { // Spawn 3 particles on click
+
+            // Spawn particles when mouse clicks
+            for (let i = 0; i < 3; i++) { 
                 particles.push(new Particle);
             }
         });
