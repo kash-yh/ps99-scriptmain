@@ -45,26 +45,33 @@
             width: 100%;
         }
 
+        .description-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            padding-left: 5px; /* Padding for description */
+            width: 100%;
+        }
+
         .description {
             font-size: 1.1em;
             line-height: 1.5;
             background-color: #3c3c5c;
             border-radius: 10px;
             padding: 15px;
-            width: 48%;
+            width: 100%;
             height: 200px;
             flex-shrink: 0;
-            margin-left: 5px;
         }
 
-        .copy-section {
+        .copy-group {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 48%;
-            height: 200px;
             gap: 10px;
-            margin-right: 5px;
+            padding-right: 5px; /* Padding for copy script */
+            width: 100%;
         }
 
         .code-box {
@@ -100,42 +107,41 @@
     <div class="title-container">zHub</div>
     <div class="main-container">
         <div class="row">
-            <div class="description">
-                Egg viewer script
+            <div class="description-group">
+                <div class="description">Egg viewer script</div>
             </div>
-            <div class="copy-section">
-                <div class="code-box">loadstring(game:HttpGet(
-"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <div class="copy-group">
+                <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
                 <button class="button" onclick="copyText()">Copy Text</button>
             </div>
         </div>
+
         <div class="row">
-            <div class="description">
-                Egg viewer script
+            <div class="description-group">
+                <div class="description">Egg viewer script</div>
             </div>
-            <div class="copy-section">
-                <div class="code-box">loadstring(game:HttpGet(
-"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <div class="copy-group">
+                <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
                 <button class="button" onclick="copyText()">Copy Text</button>
             </div>
         </div>
+
         <div class="row">
-            <div class="description">
-                Egg viewer script
+            <div class="description-group">
+                <div class="description">Egg viewer script</div>
             </div>
-            <div class="copy-section">
-                <div class="code-box">loadstring(game:HttpGet(
-"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <div class="copy-group">
+                <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
                 <button class="button" onclick="copyText()">Copy Text</button>
             </div>
         </div>
+
         <div class="row">
-            <div class="description">
-                Egg viewer script
+            <div class="description-group">
+                <div class="description">Egg viewer script</div>
             </div>
-            <div class="copy-section">
-                <div class="code-box">loadstring(game:HttpGet(
-"https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
+            <div class="copy-group">
+                <div class="code-box">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</div>
                 <button class="button" onclick="copyText()">Copy Text</button>
             </div>
         </div>
@@ -143,7 +149,7 @@
 
     <script>
         function copyText() {
-            const textToCopy = "loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()";
+            const textToCopy = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()';
             navigator.clipboard.writeText(textToCopy)
                 .then(() => alert("Script copied to clipboard!"))
                 .catch(err => alert("Failed to copy text: " + err));
