@@ -94,6 +94,8 @@
             font-size: 1em;
             cursor: pointer;
             transition: background-color 0.3s;
+            position: relative; /* Ensure z-index works */
+            z-index: 20; /* Make sure button is above canvas */
         }
 
         .button:hover {
@@ -107,7 +109,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 10; /* Canvas should be on top */
+            z-index: 10; /* Canvas should be below button */
             pointer-events: none; /* Allow mouse events to pass through to elements underneath */
         }
     </style>
