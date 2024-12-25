@@ -161,11 +161,11 @@
 
         // Particle class to handle animation
         class Particle {
-            constructor(x, y) {
+            constructor(x, y, speedX = Math.random() * 2 - 1, speedY = Math.random() * 2 - 1) {
                 this.x = x;
                 this.y = y;
-                this.speedX = Math.random() * 2 - 1; // Slower movement speed
-                this.speedY = Math.random() * 2 - 1; // Slower movement speed
+                this.speedX = speedX; // Random speed in X direction
+                this.speedY = speedY; // Random speed in Y direction
                 this.color = 'purple'; // Fixed purple color
                 this.size = Math.random() * 5 + 1;
             }
@@ -173,12 +173,14 @@
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                this.size -= 0.1;
-                // If the particle goes off the screen, reset it
+
+                // If the particle goes off the screen, reset it (for random movement)
                 if (this.x > canvas.width) this.x = 0;
                 if (this.x < 0) this.x = canvas.width;
                 if (this.y > canvas.height) this.y = 0;
                 if (this.y < 0) this.y = canvas.height;
+
+                this.size -= 0.1; // Shrinking the particle over time
             }
 
             draw() {
@@ -193,7 +195,13 @@
         function handleParticles() {
             // Spawn particles at random points (1 particle per frame for each random spot)
             for (let i = 0; i < spawnPoints.length; i++) {
-                particles.push(new Particle(spawnPoints[i].x, spawnPoints[i].y));
+                // Randomize the movement direction
+                particles.push(new Particle(
+                    spawnPoints[i].x,
+                    spawnPoints[i].y,
+                    Math.random() * 2 - 1, // Random speedX
+                    Math.random() * 2 - 1  // Random speedY
+                ));
             }
 
             // Update and draw each particle
