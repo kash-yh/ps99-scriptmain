@@ -96,6 +96,14 @@
         .button:hover {
             background-color: #7a22c8;
         }
+
+        /* Canvas styling */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Make sure canvas is behind other content */
+        }
     </style>
 </head>
 <body>
@@ -122,7 +130,101 @@
         </div>
     </div>
 
+    <!-- Canvas for particle animation -->
+    <canvas id="mycanvas"></canvas>
+
     <script>
+        // Particle Animation Script
+        const canvas = document.getElementById('mycanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        window.addEventListener('resize', function (e) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const mouse = {
+            x: undefined,
+            y: undefined,
+        };
+        // Generate random positions for spawning particles
+        const spawnPoints = [];
+        for (let i = 0; i < 10; i++) {
+            spawnPoints.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+            });
+        }
+
+        // Particle class to handle animation
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = 'purple'; // Fixed purple color
+                this.size = Math.random() * 5 + 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.size -= 0.1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Function to handle spawning and drawing particles
+        function handleParticles() {
+            // Continuously spawn particles at random points
+            for (let i = 0; i < spawnPoints.length; i++) {
+                for (let j = 0; j < 3; j++) { // 3 particles at each random point
+                    particles.push(new Particle(spawnPoints[i].x, spawnPoints[i].y));
+                }
+            }
+
+            // Update and draw each particle
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[j].x - particles[i].x;
+                    const dy = particles[j].y - particles[i].y;
+                    const distance = dx * dx + dy * dy;
+                    if (distance < 10000) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = particles[i].color;
+                        ctx.lineWidth = 0.1; // Thinner lines
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+                if (particles[i].size < 0.3) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        // Animate the particles continuously
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Copy text function for buttons
         function copyText() {
             const textToCopy = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()';
             navigator.clipboard.writeText(textToCopy)
