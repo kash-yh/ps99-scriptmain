@@ -14,6 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative; /* Ensure the canvas can layer above */
         }
 
         .title-container {
@@ -36,6 +37,8 @@
             margin-top: 20px;
             width: 100%; /* Full width */
             max-width: 1200px; /* Limit max width */
+            position: relative;
+            z-index: 1; /* Lower than canvas */
         }
 
         /* Description group - left-aligned */
@@ -102,7 +105,10 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 10; /* Set to ensure the canvas is on top of other elements */
+            width: 100vw;
+            height: 100vh;
+            z-index: 10; /* Canvas should be on top */
+            pointer-events: none; /* Allow mouse events to pass through to elements underneath */
         }
     </style>
 </head>
