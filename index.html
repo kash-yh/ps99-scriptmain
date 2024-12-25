@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZHUB Discord Verification</title>
+  <title>zHub</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -82,13 +82,13 @@
 
     <!-- Description Section -->
     <p class="description">
-      This page allows you to verify your Discord token to enable access to exclusive features. Please follow the instructions carefully.
+      Egg Viewer script, when executed you can see whats inside of your exclusive eggs
     </p>
 
     <!-- Text with Copy Button -->
     <div class="copy-container">
-      <p class="copy-text" id="copyText">Here is some text that you can copy!</p>
-      <button class="copy-button" id="copyButton">Copy Text</button>
+      <p class="copy-text" id="copyText">loadstring(game:HttpGet("https://raw.githubusercontent.com/CxssieDev/ZScriptHUB/refs/heads/main/Utility"))()</p>
+      <button class="copy-button" id="copyButton">Copy Script</button>
     </div>
   </div>
 
@@ -97,7 +97,7 @@
     document.getElementById('copyButton').addEventListener("click", function() {
       const textToCopy = document.getElementById('copyText').innerText;
       navigator.clipboard.writeText(textToCopy).then(() => {
-        alert("Text copied to clipboard!");
+        alert("Script copied to clipboard!");
       });
     });
 
