@@ -102,7 +102,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: -1; /* Make sure canvas is behind other content */
+            z-index: 10; /* Set to ensure the canvas is on top of other elements */
         }
     </style>
 </head>
@@ -140,26 +140,30 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         let particles = [];
+
         window.addEventListener('resize', function (e) {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
         let hueCol = 270; // Purple color
         const mouse = {
             x: undefined,
             y: undefined,
         };
-        canvas.addEventListener('click', function (e) {
-            mouse.x = e.x;
-            mouse.y = e.y;
-            for (let i = 0; i < 3; i++) { // Spawn 3 particles
-                particles.push(new Particle);
-            }
-        });
+
         canvas.addEventListener('mousemove', function (e) {
             mouse.x = e.x;
             mouse.y = e.y;
-            for (let i = 0; i < 3; i++) { // Spawn 3 particles
+            for (let i = 0; i < 3; i++) { // Spawn 3 particles on mouse move
+                particles.push(new Particle);
+            }
+        });
+
+        canvas.addEventListener('click', function (e) {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            for (let i = 0; i < 3; i++) { // Spawn 3 particles on click
                 particles.push(new Particle);
             }
         });
@@ -192,19 +196,6 @@
             for (var i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
-                for (var j = i + 1; j < particles.length; j++) {
-                    const dx = particles[j].x - particles[i].x;
-                    const dy = particles[j].y - particles[i].y;
-                    const distance = dx * dx + dy * dy;
-                    if (distance < 10000) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = particles[i].color;
-                        ctx.lineWidth = 0.1; // Thinner lines
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
                 if (particles[i].size < 0.3) {
                     particles.splice(i, 1);
                     i--;
