@@ -14,7 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative; /* Ensure the canvas can layer above */
+            position: relative;
         }
 
         .title-container {
@@ -28,26 +28,27 @@
             max-width: 800px;
             margin-top: 3px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Title on top of canvas */
         }
 
         .main-container {
             display: flex;
-            justify-content: space-between; /* Positions items on left and right */
+            justify-content: space-between;
             gap: 20px;
             margin-top: 20px;
-            width: 100%; /* Full width */
-            max-width: 1200px; /* Limit max width */
+            width: 100%;
+            max-width: 1200px;
             position: relative;
-            z-index: 1; /* Lower than canvas */
+            z-index: 9; /* Main container below title but above canvas */
         }
 
         /* Description group - left-aligned */
         .description-group {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align items to the top */
+            justify-content: flex-start;
             gap: 10px;
-            width: 45%; /* Set width to avoid overflowing */
+            width: 45%;
             padding-left: 5px;
         }
 
@@ -57,7 +58,7 @@
             flex-direction: column;
             justify-content: flex-start;
             gap: 10px;
-            width: 45%; /* Set width to avoid overflowing */
+            width: 45%;
             padding-right: 5px;
         }
 
@@ -94,8 +95,8 @@
             font-size: 1em;
             cursor: pointer;
             transition: background-color 0.3s;
-            position: relative; /* Ensure z-index works */
-            z-index: 20; /* Make sure button is above canvas */
+            position: relative;
+            z-index: 5; /* Button above canvas but below main container */
         }
 
         .button:hover {
@@ -109,7 +110,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 10; /* Canvas should be below button */
+            z-index: 1; /* Canvas is at the bottom */
             pointer-events: none; /* Allow mouse events to pass through to elements underneath */
         }
     </style>
