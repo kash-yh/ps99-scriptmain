@@ -26,6 +26,8 @@
       text-align: center;  /* Centers the content */
       position: relative; /* Keeps the container above the canvas */
       z-index: 2; /* Ensures the container is above the canvas */
+      max-height: 80vh; /* Prevents container from being too tall */
+      overflow-y: auto; /* Adds scroll if the content exceeds max-height */
     }
     .container h2 {
       text-align: center;
@@ -35,6 +37,8 @@
       font-size: 14px;
       margin-top: 20px;
       color: #ccc;
+      word-wrap: break-word; /* Ensures long words wrap properly */
+      overflow-wrap: break-word; /* Adds additional support for wrapping */
     }
     .copy-container {
       display: flex;
@@ -48,6 +52,9 @@
       margin-bottom: 10px;
       word-wrap: break-word;
       text-align: center;
+      overflow-wrap: break-word; /* Prevents text from overflowing */
+      word-break: break-word;  /* Ensures long words break and wrap correctly */
+      max-width: 100%; /* Makes sure it doesn't extend beyond container width */
     }
     .copy-button {
       padding: 10px;
@@ -58,6 +65,8 @@
       font-size: 14px;
       cursor: pointer;
       width: 100%;
+      max-width: 200px; /* Ensures button width does not exceed container width */
+      margin-top: 10px; /* Adds spacing above the button */
     }
     .copy-button:hover {
       background-color: #7a3e99;
