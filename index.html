@@ -149,6 +149,7 @@
             x: undefined,
             y: undefined,
         };
+
         // Generate random positions for spawning particles
         const spawnPoints = [];
         for (let i = 0; i < 10; i++) {
@@ -223,6 +224,23 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        // Mouse event listeners to spawn particles
+        canvas.addEventListener('click', function (e) {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            for (let i = 0; i < 5; i++) { // Spawn 5 particles at mouse position
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        canvas.addEventListener('mousemove', function (e) {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            for (let i = 0; i < 5; i++) { // Spawn 5 particles at mouse position
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
 
         // Copy text function for buttons
         function copyText() {
